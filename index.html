@@ -264,33 +264,11 @@
     color: #a5e075; font-weight: 900; font-size: 1rem; margin-top: 12px;
     text-shadow: 2px 2px 0 rgba(0,0,0,.55);
   }
-  .splash {
-    display: inline-block; margin-top: 14px;
-    font-family: 'Press Start 2P', monospace; font-size: .6rem; color: #ffff54;
-    text-shadow: 2px 2px 0 #3f3f00;
-    animation: denyutSplash .45s ease-in-out infinite alternate;
-  }
-  @keyframes denyutSplash {
-    from { transform: rotate(-4deg) scale(1); }
-    to { transform: rotate(-4deg) scale(1.09); }
-  }
   .identitas {
     display: table; margin: 16px auto 18px; padding: 8px 18px;
     color: #e8e0cf; background: rgba(0,0,0,.45);
     border: 3px solid #14100b; box-shadow: inset 0 0 0 2px rgba(255,255,255,.14);
   }
-  .achievement {
-    display: flex; gap: 14px; align-items: center;
-    max-width: 540px; margin: 0 auto 18px; padding: 12px 18px; text-align: left;
-    background: #212121; border: 3px solid #0d0d0d;
-    box-shadow: inset 0 0 0 2px #6d6d6d, 6px 6px 0 rgba(0,0,0,.4);
-  }
-  .ach-ikon { font-size: 1.7rem; }
-  .ach-judul {
-    font-family: 'Press Start 2P', monospace; font-size: .62rem; color: #ffff54;
-    text-shadow: 1px 1px 0 #3f3f00; margin-bottom: 6px;
-  }
-  .ach-isi { font-weight: 800; color: #fff; font-size: .92rem; }
   #bingkai {
     background: linear-gradient(180deg, #69a83b 0 30px, #5b8f31 30px 36px, #6b4a2a 36px);
     border: 5px solid #241708; border-radius: 0;
@@ -402,7 +380,6 @@
   @media (max-width: 720px) {
     .panel-utama, .grid-seksi { grid-template-columns: 1fr; }
     header h1 { font-size: 1.2rem; }
-    .achievement { flex-direction: row; }
   }
 </style>
 </head>
@@ -415,17 +392,9 @@
   <header>
     <h1>🐷 OINKY si Babi Lumpur!</h1>
     <p>Proyek Multimedia: Gambar Bergerak dan Bersuara — Tema Hujan &amp; Lumpur</p>
-    <div class="splash">Sekarang dengan suara babi ASLI!</div>
   </header>
   <div class="identitas">Wisnu Septa Harianto Putra | NIM 242502040041 | Kelas 3TI01</div>
 
-  <div class="achievement">
-    <span class="ach-ikon">🏆</span>
-    <div>
-      <div class="ach-judul">ACHIEVEMENT UNLOCKED!</div>
-      <div class="ach-isi">Versi Suara Asli — rekaman babi beneran &amp; tema Minecraft ⛏️</div>
-    </div>
-  </div>
 
   <div id="bingkai">
     <div id="panggung" title="Klik babinya untuk oink">
