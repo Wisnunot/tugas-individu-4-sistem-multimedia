@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OINKY si Babi Lumpur | Proyek Multimedia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root { --ink: #3b2b2f; --pink: #ff8fab; --pink2: #ffb3c2; --mud: #8a5a2b; --mud2: #6f451f; }
+  body {
+    font-family: 'Nunito', 'Segoe UI', sans-serif;
+    background:
+      radial-gradient(circle at 10% 16%, rgba(255,255,255,.5) 0 24px, transparent 25px),
+      radial-gradient(circle at 90% 60%, rgba(255,255,255,.4) 0 32px, transparent 33px),
+      linear-gradient(180deg, #a8c6e8 0%, #d7ecff 36%, #fdf0d5 80%, #ffe9ec 100%);
+    color: var(--ink); min-height: 100vh;
+  }
+  .container { max-width: 920px; margin: 0 auto; padding: 30px 18px 56px; position: relative; }
+  .ciprat { position: absolute; font-size: 22px; opacity: .35; pointer-events: none; }
+
+  header { text-align: center; margin-bottom: 8px; }
+  header h1 {
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 2.7rem;
+    letter-spacing: 1px; color: var(--ink);
+    text-shadow: 3px 3px 0 #ffc2d1;
+    animation: melayang 3s ease-in-out infinite; display: inline-block;
+  }
+  @keyframes melayang { 0%,100% { transform: translateY(0) rotate(-1deg); } 50% { transform: translateY(-6px) rotate(1deg); } }
+  header p { font-weight: 800; color: #7a4b1e; margin-top: 2px; font-size: 1.05rem; }
+  .identitas { text-align: center; color: #8a6d7a; font-weight: 700; font-size: .9rem; margin: 8px 0 20px; }
+  .stiker-bar { text-align: center; margin-bottom: 14px; }
+  .stiker {
+    display: inline-block; font-family: 'Fredoka', sans-serif; font-weight: 600;
+    padding: 6px 16px; border-radius: 999px; border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink); margin: 0 5px 6px; font-size: .92rem; background: #fff;
+  }
+  .stiker.pink { background: #ffc2d1; transform: rotate(-3deg); }
+  .stiker.coklat { background: #e7c08a; transform: rotate(2deg); }
+  .stiker.biru { background: #a9d6ff; transform: rotate(-1deg); }
+  .stiker.hijau { background: #b8f1cc; transform: rotate(1deg); }
+
+  /* ---------- Panggung: sore hujan di pekarangan ---------- */
+  #bingkai {
+    background: #fff; border: 4px solid var(--ink); border-radius: 26px;
+    box-shadow: 10px 10px 0 var(--ink); padding: 12px; position: relative;
+  }
+  #panggung {
+    position: relative; width: 100%; aspect-ratio: 16/8.4;
+    border-radius: 18px; overflow: hidden; cursor: pointer;
+    background: linear-gradient(180deg, #5f7ca6 0%, #87a7cc 42%, #b7cdbb 78%, #a8bf97 100%);
+    border: 3px solid var(--ink);
+    user-select: none; -webkit-user-select: none; touch-action: manipulation;
+  }
+  #panggung.reda { background: linear-gradient(180deg, #7ec8f7 0%, #bde6ff 46%, #d9ecc0 80%, #b5d69c 100%); }
+  #kilat {
+    position: absolute; inset: 0; background: #fffbe8; opacity: 0;
+    pointer-events: none; z-index: 8;
+  }
+  .awan {
+    position: absolute; width: 190px; height: 52px; border-radius: 999px;
+    background: #54687f; opacity: .92; z-index: 2;
+    animation: geserAwan 9s ease-in-out infinite alternate;
+  }
+  .awan::before, .awan::after {
+    content: ''; position: absolute; border-radius: 50%; background: inherit;
+  }
+  .awan::before { width: 84px; height: 84px; left: 26px; top: -38px; }
+  .awan::after { width: 58px; height: 58px; right: 22px; top: -24px; }
+  .awan.muda { background: #71879f; transform: scale(.72); animation-duration: 12s; }
+  @keyframes geserAwan { from { margin-left: -14px; } to { margin-left: 26px; } }
+  #matahari {
+    position: absolute; top: 6%; right: 7%; width: 74px; height: 74px; z-index: 1;
+    border-radius: 50%; background: #ffd93d; box-shadow: 0 0 40px 14px rgba(255,217,61,.45);
+    opacity: 0; transition: opacity .8s ease;
+  }
+  #pelangi { position: absolute; left: 8%; top: 3%; width: 46%; opacity: 0; transition: opacity .8s ease; z-index: 1; }
+  #panggung.reda #matahari, #panggung.reda #pelangi { opacity: 1; }
+  #pagar { position: absolute; left: 0; bottom: 17%; width: 100%; z-index: 1; opacity: .95; }
+  #rumput {
+    position: absolute; left: 0; bottom: 0; width: 100%; height: 20%;
+    background: linear-gradient(180deg, #7da05e, #5d7f42); z-index: 1;
+  }
+  /* Genangan lumpur */
+  #genangan {
+    position: absolute; left: 50%; bottom: 2.5%; transform: translateX(-50%);
+    width: 74%; height: 21%; z-index: 2;
+    background: radial-gradient(ellipse at 50% 42%, #a06a35 0%, #845325 55%, var(--mud2) 100%);
+    border-radius: 50%;
+    box-shadow: inset 0 6px 18px rgba(0,0,0,.35), inset 0 -4px 10px rgba(255,255,255,.12);
+  }
+  .riak {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+    border: 3px solid rgba(255,235,200,.5); border-radius: 50%;
+    animation: riak 2.4s ease-out infinite; pointer-events: none;
+  }
+  @keyframes riak { from { width: 8%; height: 14%; opacity: .9; } to { width: 78%; height: 92%; opacity: 0; } }
+  /* Hujan */
+  #hujan { position: absolute; inset: 0; z-index: 7; pointer-events: none; overflow: hidden; }
+  .tetes {
+    position: absolute; top: -46px; width: 2.5px; border-radius: 3px;
+    background: linear-gradient(180deg, rgba(210,235,255,0), rgba(210,235,255,.95));
+    animation: jatuh linear infinite;
+  }
+  @keyframes jatuh { to { transform: translateY(620px); } }
+  #petirSvg { position: absolute; top: 9%; left: 58%; width: 54px; z-index: 3; opacity: 0; }
+
+  #gelembung {
+    position: absolute; left: 7%; top: 5%; z-index: 9;
+    background: #fff; color: var(--ink); font-family: 'Fredoka', sans-serif; font-weight: 600;
+    padding: 8px 15px; border-radius: 16px; border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 rgba(59,43,47,.8); font-size: .96rem; max-width: 46%;
+    animation: memantul 1.8s ease-in-out infinite;
+  }
+  #gelembung::after {
+    content: ''; position: absolute; left: 38px; bottom: -12px;
+    border: 7px solid transparent; border-top: 10px solid var(--ink);
+  }
+  @keyframes memantul { 0%,100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-5px) rotate(1deg); } }
+  #gelembung.berteriak { animation: teriak .3s ease-in-out infinite; background: #ffd93d; }
+  @keyframes teriak { 0%,100% { transform: scale(1) rotate(-2deg); } 50% { transform: scale(1.09) rotate(2deg); } }
+
+  /* Babi */
+  #pigMover { position: absolute; left: 50%; bottom: 7%; width: 47%; z-index: 5; transform: translateX(-50%); }
+  #pigBob { will-change: transform; }
+  #pigRoll { transform-origin: 50% 52%; will-change: transform; }
+  #pigRoll svg { width: 100%; display: block; overflow: visible; }
+  .kaki { transform-box: fill-box; transform-origin: 50% 6%; will-change: transform; }
+  #ekor { transform-box: fill-box; transform-origin: 90% 50%; animation: kibas 1.1s ease-in-out infinite alternate; }
+  @keyframes kibas { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
+  #telinga { transform-box: fill-box; transform-origin: 20% 90%; animation: kibas 1.6s ease-in-out infinite alternate; }
+  .spot-lumpur { transition: opacity .7s ease; }
+  .gelombang {
+    position: absolute; border: 4px solid rgba(255,255,255,.9); border-radius: 50%;
+    transform: translate(-50%,-50%); opacity: 0; pointer-events: none; z-index: 6;
+  }
+  .partikel {
+    position: absolute; z-index: 9; pointer-events: none; font-size: 20px;
+    animation: ledak .9s ease-out forwards;
+  }
+  @keyframes ledak {
+    from { transform: translate(0,0) scale(.4) rotate(0deg); opacity: 1; }
+    to { transform: translate(var(--dx), var(--dy)) scale(1.25) rotate(var(--rot)); opacity: 0; }
+  }
+  #eq {
+    position: absolute; right: 14px; bottom: 12px; display: flex; gap: 4px;
+    align-items: flex-end; height: 44px; z-index: 9;
+  }
+  #eq span { width: 7px; background: #ffd93d; border-radius: 3px; height: 12%; transition: height .07s linear; }
+
+  .klik-hint {
+    text-align: center; font-family: 'Fredoka', sans-serif; font-weight: 600;
+    font-size: 1.2rem; margin: 18px 0 10px; color: var(--ink);
+  }
+  .tombol-tengah { text-align: center; display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  .btn {
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.02rem;
+    color: #fff; border: 3px solid var(--ink); border-radius: 999px;
+    padding: 10px 24px; cursor: pointer; box-shadow: 4px 4px 0 var(--ink);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .btn:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 var(--ink); }
+  .btn:active { transform: translate(3px,3px); box-shadow: 1px 1px 0 var(--ink); }
+  #btnOink { background: #ff5964; }
+  #btnGuling { background: var(--mud); }
+  #btnPetir { background: #5b7fb8; }
+  #btnMandi { background: #00a896; }
+
+  .meteran { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin: 18px auto 4px; max-width: 760px; }
+  .meter {
+    background: #fff; border: 3px solid var(--ink); border-radius: 18px;
+    box-shadow: 4px 4px 0 var(--ink); padding: 9px 16px; min-width: 215px; flex: 1;
+  }
+  .meter .label { font-weight: 900; font-size: .92rem; display: flex; justify-content: space-between; }
+  .rel { height: 14px; border: 2.5px solid var(--ink); border-radius: 999px; margin-top: 6px; overflow: hidden; background: #f4ecec; }
+  .isi { height: 100%; width: 0%; border-radius: 999px; transition: width .5s ease; }
+  #isiBahagia { background: linear-gradient(90deg, #ff8fab, #ff5964); }
+  #isiKotor { background: linear-gradient(90deg, #b07a3f, #6f451f); }
+  #lencana {
+    display: none; text-align: center; margin-top: 14px;
+    font-family: 'Fredoka', sans-serif; font-weight: 700; font-size: 1.15rem;
+    background: #ffd93d; border: 3px solid var(--ink); border-radius: 999px;
+    padding: 9px 20px; box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .kontrol {
+    display: flex; flex-wrap: wrap; gap: 14px 18px; justify-content: center;
+    margin: 16px auto 8px; max-width: 780px;
+  }
+  .kontrol label {
+    display: flex; align-items: center; gap: 10px; font-weight: 800; color: var(--ink);
+    background: #fff; border: 3px solid var(--ink); border-radius: 999px;
+    padding: 9px 18px; box-shadow: 4px 4px 0 var(--ink); font-size: .95rem;
+  }
+  .kontrol input[type="range"] { width: 140px; }
+  #sliderCepat { accent-color: #ff5964; }
+  #sliderHujan { accent-color: #5b7fb8; }
+  #sliderVol { accent-color: #00a896; }
+  .tips { text-align: center; color: #7a4b1e; font-weight: 700; font-size: .92rem; }
+  .tips code, section code {
+    background: var(--ink); padding: 2px 9px; border-radius: 7px;
+    font-family: Consolas, monospace; color: #ffe9a8; font-size: .92em;
+  }
+
+  section {
+    background: #fff; border: 3px solid var(--ink); border-radius: 22px;
+    box-shadow: 7px 7px 0 var(--ink); padding: 22px 24px; margin-top: 26px;
+  }
+  section h2, section h3 { font-family: 'Fredoka', sans-serif; color: var(--ink); margin-bottom: 10px; }
+  section h3 { font-size: 1.25rem; }
+  .nomor {
+    display: inline-flex; width: 34px; height: 34px; border-radius: 50%;
+    align-items: center; justify-content: center; color: var(--ink);
+    border: 3px solid var(--ink); margin-right: 9px; font-size: 1.05rem; vertical-align: -8px;
+  }
+  .n1 { background: #ffc2d1; } .n2 { background: #a9d6ff; } .n3 { background: #e7c08a; } .n4 { background: #b8f1cc; }
+  section p, section li { color: #5c4750; line-height: 1.68; font-size: .98rem; font-weight: 600; }
+  section ul, section ol { padding-left: 20px; }
+  .player { border: 3px solid var(--ink); border-radius: 16px; overflow: hidden; margin-top: 10px; background: #000; }
+  .player video { width: 100%; display: block; }
+  pre {
+    background: var(--ink); border-radius: 14px; padding: 13px 16px;
+    overflow-x: auto; margin-top: 12px;
+  }
+  pre code { background: none; padding: 0; color: #ffe9c9; }
+  .unduh { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .unduh a {
+    color: var(--ink); background: #ffd93d; text-decoration: none; font-weight: 900;
+    padding: 9px 17px; border-radius: 999px; font-size: .9rem;
+    border: 3px solid var(--ink); box-shadow: 3px 3px 0 var(--ink);
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  .unduh a:nth-child(2n) { background: #ffc2d1; }
+  .unduh a:nth-child(3n) { background: #a9d6ff; }
+  .unduh a:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 var(--ink); }
+  footer { text-align: center; color: #7a4b1e; font-weight: 700; font-size: .86rem; margin-top: 30px; }
+  @media (max-width: 560px) {
+    header h1 { font-size: 2rem; }
+    #gelembung { font-size: .78rem; left: 4%; max-width: 58%; }
+    #pigMover { width: 62%; }
+    .awan { transform: scale(.6); }
+  }
+
+  /* ================= TEMA MINECRAFT (override tampilan) ================= */
+  body {
+    background-color: #31241a;
+    background-image:
+      linear-gradient(45deg, rgba(0,0,0,.22) 25%, transparent 25%, transparent 75%, rgba(0,0,0,.22) 75%),
+      linear-gradient(45deg, rgba(255,255,255,.045) 25%, transparent 25%, transparent 75%, rgba(255,255,255,.045) 75%),
+      linear-gradient(180deg, #3d2c1d, #2b1f13);
+    background-size: 52px 52px, 52px 52px, 100% 100%;
+    background-position: 0 0, 26px 26px, 0 0;
+    color: #f2ead9;
+  }
+  .ciprat { opacity: .45; }
+  header { position: relative; }
+  header h1 {
+    font-family: 'Press Start 2P', monospace; font-size: 1.9rem; line-height: 1.4;
+    color: #ffffff; text-shadow: 4px 4px 0 #3a3a3a, 8px 8px 0 rgba(0,0,0,.35);
+    animation: none;
+  }
+  header p {
+    color: #a5e075; font-weight: 900; font-size: 1rem; margin-top: 12px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.55);
+  }
+  .splash {
+    display: inline-block; margin-top: 14px;
+    font-family: 'Press Start 2P', monospace; font-size: .6rem; color: #ffff54;
+    text-shadow: 2px 2px 0 #3f3f00;
+    animation: denyutSplash .45s ease-in-out infinite alternate;
+  }
+  @keyframes denyutSplash {
+    from { transform: rotate(-4deg) scale(1); }
+    to { transform: rotate(-4deg) scale(1.09); }
+  }
+  .identitas {
+    display: table; margin: 16px auto 18px; padding: 8px 18px;
+    color: #e8e0cf; background: rgba(0,0,0,.45);
+    border: 3px solid #14100b; box-shadow: inset 0 0 0 2px rgba(255,255,255,.14);
+  }
+  .achievement {
+    display: flex; gap: 14px; align-items: center;
+    max-width: 540px; margin: 0 auto 18px; padding: 12px 18px; text-align: left;
+    background: #212121; border: 3px solid #0d0d0d;
+    box-shadow: inset 0 0 0 2px #6d6d6d, 6px 6px 0 rgba(0,0,0,.4);
+  }
+  .ach-ikon { font-size: 1.7rem; }
+  .ach-judul {
+    font-family: 'Press Start 2P', monospace; font-size: .62rem; color: #ffff54;
+    text-shadow: 1px 1px 0 #3f3f00; margin-bottom: 6px;
+  }
+  .ach-isi { font-weight: 800; color: #fff; font-size: .92rem; }
+  #bingkai {
+    background: linear-gradient(180deg, #69a83b 0 30px, #5b8f31 30px 36px, #6b4a2a 36px);
+    border: 5px solid #241708; border-radius: 0;
+    box-shadow: 10px 10px 0 rgba(0,0,0,.55);
+    padding: 52px 12px 12px; position: relative;
+  }
+  #bingkai::after {
+    content: '🌍 WORLD: HUJAN_DAN_LUMPUR.SAV';
+    position: absolute; top: 9px; left: 14px;
+    font-family: 'Press Start 2P', monospace; font-size: .56rem; color: #fff;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.5);
+  }
+  #panggung { border-radius: 0; border: 4px solid #170f06; }
+  #gelembung { border-radius: 2px; box-shadow: 4px 4px 0 rgba(0,0,0,.45); }
+  #eq span { background: #7ee06a; }
+  .panel-utama {
+    display: grid; grid-template-columns: 1.05fr .95fr; gap: 20px; margin-top: 24px;
+  }
+  .mc-panel {
+    background: #c6c6c6; color: #26221e;
+    border: 4px solid; border-color: #f4f4f4 #555555 #555555 #f4f4f4;
+    box-shadow: 8px 8px 0 rgba(0,0,0,.5), inset 0 0 0 3px #8b8b8b;
+    padding: 18px;
+  }
+  .panel-lebar { margin-top: 20px; }
+  .panel-judul {
+    font-family: 'Press Start 2P', monospace; font-size: .72rem; color: #333;
+    text-shadow: 1px 1px 0 #fff; margin-bottom: 14px;
+  }
+  .klik-hint {
+    text-align: left; font-size: .98rem; margin: 0 0 14px;
+    color: #4a4238; font-family: 'Nunito', sans-serif;
+  }
+  .grid-tombol { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .btn {
+    font-family: 'Press Start 2P', monospace; font-size: .6rem; line-height: 1.6;
+    color: #fff; border: 3px solid #101010; border-radius: 0; padding: 14px 8px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.45);
+    box-shadow: inset -4px -7px 0 rgba(0,0,0,.25), inset 4px 4px 0 rgba(255,255,255,.28), 4px 4px 0 rgba(0,0,0,.45);
+  }
+  .btn:hover { transform: none; filter: brightness(1.12); box-shadow: inset -4px -7px 0 rgba(0,0,0,.25), inset 4px 4px 0 rgba(255,255,255,.28), 4px 4px 0 rgba(0,0,0,.45); }
+  .btn:active { transform: translate(2px, 2px); box-shadow: inset -4px -7px 0 rgba(0,0,0,.25), inset 4px 4px 0 rgba(255,255,255,.28), 1px 1px 0 rgba(0,0,0,.45); }
+  #btnOink { background: #58a327; }
+  #btnGuling { background: #8a5f2e; }
+  #btnPetir { background: #757575; }
+  #btnMandi { background: #3366cc; }
+  .meteran { display: block; margin: 0; max-width: none; }
+  .meter { background: transparent; border: none; box-shadow: none; padding: 0; margin-bottom: 14px; min-width: 0; }
+  .meter .label { color: #33291f; }
+  .rel {
+    border: 3px solid #1c1c1c; border-radius: 0; height: 18px;
+    background: #3d3d3d; position: relative; overflow: hidden;
+  }
+  .rel::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: repeating-linear-gradient(90deg, transparent 0 calc(10% - 3px), rgba(20,16,10,.85) calc(10% - 3px) 10%);
+  }
+  #isiBahagia { background: linear-gradient(180deg, #ff7b6b, #d61f1f); }
+  #isiKotor { background: linear-gradient(180deg, #b9834a, #71451c); }
+  #lencana {
+    border-radius: 0; background: #2e7d1e; color: #fff; border: 3px solid #101010;
+    box-shadow: 4px 4px 0 rgba(0,0,0,.45); text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+    font-size: .95rem; margin-top: 4px;
+  }
+  .kontrol { margin: 0; justify-content: flex-start; }
+  .kontrol label {
+    background: #a8a8a8; border: 3px solid #101010; border-radius: 0; color: #1e1e1e;
+    box-shadow: inset -3px -5px 0 rgba(0,0,0,.18), inset 3px 3px 0 rgba(255,255,255,.35);
+  }
+  .kontrol input[type="range"] { accent-color: #58a327; }
+  #sliderCepat, #sliderHujan, #sliderVol { accent-color: #58a327; }
+  .tips { color: #4a4238; margin-top: 14px; text-align: left; }
+  .tips code, section code { background: #141414; color: #7ee06a; border-radius: 0; }
+  .grid-seksi { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 26px; }
+  section {
+    margin-top: 0; border-radius: 0; color: #fff; padding: 22px;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.16) 50%, transparent 50%),
+      linear-gradient(rgba(0,0,0,.16) 50%, transparent 50%),
+      #7d7d7d;
+    background-size: 44px 44px;
+    border: 4px solid; border-color: #a9a9a9 #4a4a4a #4a4a4a #a9a9a9;
+    box-shadow: 8px 8px 0 rgba(0,0,0,.5), inset 0 0 0 3px #666666;
+  }
+  section h2, section h3 {
+    font-family: 'Press Start 2P', monospace; font-size: .82rem; line-height: 1.7;
+    color: #fff; text-shadow: 3px 3px 0 #333;
+  }
+  section p, section li { color: #f7f3e8; text-shadow: 1px 1px 0 rgba(0,0,0,.3); }
+  .nomor {
+    border-radius: 0; border: 3px solid #14100b; color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+    font-family: 'Press Start 2P', monospace; font-size: .78rem;
+  }
+  .n1 { background: #58a327; } .n2 { background: #3366cc; }
+  .n3 { background: #8a5f2e; } .n4 { background: #c22e2e; }
+  .player { border-radius: 0; border: 3px solid #14100b; }
+  pre { border-radius: 0; background: #191410; }
+  .unduh a {
+    border-radius: 0; border: 3px solid #101010; color: #fff;
+    text-shadow: 1px 1px 0 rgba(0,0,0,.4); background: #58a327;
+    box-shadow: inset -3px -5px 0 rgba(0,0,0,.22), inset 3px 3px 0 rgba(255,255,255,.25), 3px 3px 0 rgba(0,0,0,.45);
+  }
+  .unduh a:nth-child(2n) { background: #757575; }
+  .unduh a:nth-child(3n) { background: #8a5f2e; }
+  .unduh a:nth-child(4n) { background: #3366cc; }
+  .unduh a:hover { transform: translate(-1px, -1px); }
+  footer { color: #cdbfa8; }
+  @media (max-width: 720px) {
+    .panel-utama, .grid-seksi { grid-template-columns: 1fr; }
+    header h1 { font-size: 1.2rem; }
+    .achievement { flex-direction: row; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <span class="ciprat" style="left:2%; top:130px;">🟤</span>
+  <span class="ciprat" style="right:3%; top:320px;">🐽</span>
+  <span class="ciprat" style="left:4%; bottom:190px;">💧</span>
+
+  <header>
+    <h1>🐷 OINKY si Babi Lumpur!</h1>
+    <p>Proyek Multimedia: Gambar Bergerak dan Bersuara — Tema Hujan &amp; Lumpur</p>
+    <div class="splash">Sekarang dengan suara babi ASLI!</div>
+  </header>
+  <div class="identitas">Wisnu Septa Harianto Putra | NIM 242502040041 | Kelas 3TI01</div>
+
+  <div class="achievement">
+    <span class="ach-ikon">🏆</span>
+    <div>
+      <div class="ach-judul">ACHIEVEMENT UNLOCKED!</div>
+      <div class="ach-isi">Versi Suara Asli — rekaman babi beneran &amp; tema Minecraft ⛏️</div>
+    </div>
+  </div>
+
+  <div id="bingkai">
+    <div id="panggung" title="Klik babinya untuk oink">
+      <div id="matahari"></div>
+      <svg id="pelangi" viewBox="0 0 300 150">
+        <path d="M10 150 A140 140 0 0 1 290 150" fill="none" stroke="#ff5964" stroke-width="13"/>
+        <path d="M28 150 A122 122 0 0 1 272 150" fill="none" stroke="#ffb703" stroke-width="13"/>
+        <path d="M46 150 A104 104 0 0 1 254 150" fill="none" stroke="#8ac926" stroke-width="13"/>
+        <path d="M64 150 A86 86 0 0 1 236 150" fill="none" stroke="#4cc9f0" stroke-width="13"/>
+      </svg>
+      <div class="awan" style="left:6%; top:5%;"></div>
+      <div class="awan muda" style="left:52%; top:2%;"></div>
+      <div class="awan muda" style="left:78%; top:9%;"></div>
+      <svg id="petirSvg" viewBox="0 0 60 100">
+        <polygon points="34,0 6,56 26,56 18,100 54,38 32,38" fill="#ffd93d" stroke="#3b2b2f" stroke-width="3" stroke-linejoin="round"/>
+      </svg>
+      <svg id="pagar" viewBox="0 0 1280 90" preserveAspectRatio="none">
+        <g fill="#a4713a" stroke="#7c5222" stroke-width="3">
+          <rect x="0" y="26" width="1280" height="13"/>
+          <rect x="0" y="58" width="1280" height="13"/>
+        </g>
+        <g fill="#b57f45" stroke="#7c5222" stroke-width="3">
+          <rect x="70" y="6" width="20" height="84"/><rect x="330" y="6" width="20" height="84"/>
+          <rect x="590" y="6" width="20" height="84"/><rect x="850" y="6" width="20" height="84"/>
+          <rect x="1110" y="6" width="20" height="84"/>
+        </g>
+      </svg>
+      <div id="rumput"></div>
+      <div id="genangan">
+        <div class="riak"></div>
+        <div class="riak" style="animation-delay: .8s;"></div>
+        <div class="riak" style="animation-delay: 1.6s;"></div>
+      </div>
+      <div id="gelembung"><span id="teksGelembung">Hujan-hujan gini enaknya guling di lumpur! 🟤</span></div>
+
+      <div id="pigMover">
+        <div id="pigBob">
+          <div id="pigRoll">
+            <svg viewBox="0 0 380 270" role="img" aria-label="Babi merah muda di genangan lumpur">
+              <!-- kaki belakang (jauh) -->
+              <g class="kaki" id="kakiB1"><rect x="96" y="182" width="27" height="58" rx="12" fill="#e87a95"/><rect x="94" y="228" width="31" height="14" rx="6" fill="#5d4037"/></g>
+              <g class="kaki" id="kakiB2"><rect x="228" y="182" width="27" height="58" rx="12" fill="#e87a95"/><rect x="226" y="228" width="31" height="14" rx="6" fill="#5d4037"/></g>
+              <!-- ekor keriting -->
+              <path id="ekor" d="M58 108 q-26 -6 -24 -26 q2 -16 18 -14 q13 2 10 13 q-2 9 -11 7" fill="none" stroke="#e87a95" stroke-width="8" stroke-linecap="round"/>
+              <!-- badan -->
+              <ellipse cx="185" cy="140" rx="128" ry="82" fill="#ffb3c2" stroke="#3b2b2f" stroke-width="4"/>
+              <!-- kaki depan (dekat) -->
+              <g class="kaki" id="kakiD1"><rect x="128" y="188" width="29" height="58" rx="13" fill="#ff8fab"/><rect x="126" y="234" width="33" height="14" rx="6" fill="#4e342e"/></g>
+              <g class="kaki" id="kakiD2"><rect x="258" y="188" width="29" height="58" rx="13" fill="#ff8fab"/><rect x="256" y="234" width="33" height="14" rx="6" fill="#4e342e"/></g>
+              <!-- bercak lumpur di badan (makin banyak sesuai Meter Kotor) -->
+              <g fill="#7c4a21">
+                <ellipse class="spot-lumpur" data-ambang="5"  cx="120" cy="168" rx="26" ry="14" opacity="0"/>
+                <ellipse class="spot-lumpur" data-ambang="25" cx="205" cy="102" rx="20" ry="11" opacity="0"/>
+                <ellipse class="spot-lumpur" data-ambang="45" cx="168" cy="182" rx="30" ry="15" opacity="0"/>
+                <ellipse class="spot-lumpur" data-ambang="65" cx="96"  cy="122" rx="17" ry="10" opacity="0"/>
+                <ellipse class="spot-lumpur" data-ambang="82" cx="238" cy="152" rx="24" ry="13" opacity="0"/>
+              </g>
+              <!-- kepala -->
+              <g id="kepala">
+                <path id="telinga" d="M262 42 q26 -22 40 -2 q-16 4 -22 16 q-4 9 -18 -14z" fill="#ff8fab" stroke="#3b2b2f" stroke-width="4" stroke-linejoin="round"/>
+                <circle cx="292" cy="98" r="60" fill="#ffb3c2" stroke="#3b2b2f" stroke-width="4"/>
+                <ellipse class="spot-lumpur" data-ambang="55" cx="262" cy="66" rx="13" ry="8" fill="#7c4a21" opacity="0"/>
+                <ellipse cx="272" cy="116" rx="11" ry="7" fill="#ff9db4" opacity=".8"/>
+                <!-- mata senang (saat guling / oink) -->
+                <path id="mataSenang" d="M282 84 q9 -10 18 0" fill="none" stroke="#3b2b2f" stroke-width="5" stroke-linecap="round" opacity="0"/>
+                <circle id="mataBiasa" cx="291" cy="84" r="6.5" fill="#3b2b2f"/>
+                <!-- moncong -->
+                <g id="moncong">
+                  <ellipse cx="332" cy="108" rx="27" ry="21" fill="#ff8fab" stroke="#3b2b2f" stroke-width="4"/>
+                  <circle cx="324" cy="108" r="4.6" fill="#a13d55"/>
+                  <circle cx="340" cy="108" r="4.6" fill="#a13d55"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <div class="gelombang" id="gel0"></div>
+      <div class="gelombang" id="gel1"></div>
+      <div class="gelombang" id="gel2"></div>
+      <div id="hujan"></div>
+      <div id="kilat"></div>
+      <div id="eq"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <div class="panel-utama">
+    <div class="mc-panel">
+      <div class="panel-judul">🎮 KONTROL AKSI</div>
+      <p class="klik-hint">👆 Klik babinya buat dengar oink, atau pencet tombol guling-gulingnya!</p>
+      <div class="grid-tombol">
+        <button class="btn" id="btnOink" type="button">🐽 Oink Sekarang!</button>
+        <button class="btn" id="btnGuling" type="button">🌀 Guling-guling!</button>
+        <button class="btn" id="btnPetir" type="button">⚡ Petir!</button>
+        <button class="btn" id="btnMandi" type="button">🚿 Mandikan</button>
+      </div>
+    </div>
+    <div class="mc-panel">
+      <div class="panel-judul">📊 STATUS BABI</div>
+      <div class="meteran">
+        <div class="meter">
+          <div class="label"><span>❤️ Meter Bahagia</span><span id="angkaBahagia">20%</span></div>
+          <div class="rel"><div class="isi" id="isiBahagia"></div></div>
+        </div>
+        <div class="meter">
+          <div class="label"><span>🟤 Meter Kotor</span><span id="angkaKotor">10%</span></div>
+          <div class="rel"><div class="isi" id="isiKotor"></div></div>
+        </div>
+        <div class="meter">
+          <div class="label"><span>🔄 Jumlah Gulingan</span><span id="angkaGuling">0x</span></div>
+          <div class="rel"><div class="isi" id="isiGuling" style="background:linear-gradient(180deg,#a4f07a,#43c40f);"></div></div>
+        </div>
+      </div>
+      <div style="text-align:center;"><span id="lencana">🏆 BABI LUMPUR LEGENDARIS! 100% kotor, 100% bahagia! 🐷👑</span></div>
+    </div>
+  </div>
+
+  <div class="mc-panel panel-lebar">
+    <div class="panel-judul">⚙️ PENGATURAN DUNIA</div>
+    <div class="kontrol">
+      <label>🌀 Kecepatan <input type="range" id="sliderCepat" min="0" max="2" step="0.1" value="1"> <span id="nilaiCepat">1.0x</span></label>
+      <label>🌧️ Hujan <input type="range" id="sliderHujan" min="0" max="100" step="1" value="70"> <span id="nilaiHujan">70%</span></label>
+      <label>🔊 Volume <input type="range" id="sliderVol" min="0" max="100" step="1" value="90"> <span id="nilaiVol">90%</span></label>
+    </div>
+    <p class="tips">Tips: <code>Spasi</code> = oink &nbsp;•&nbsp; <code>G</code> = guling-guling &nbsp;•&nbsp; <code>P</code> = petir &nbsp;•&nbsp; <code>M</code> = mandikan. Turunkan hujan ke 0% buat lihat pelangi! 🌈</p>
+  </div>
+
+<div class="grid-seksi">
+  <section>
+    <h3><span class="nomor n1">1</span>Gambar 🖼️</h3>
+    <p>
+      Karakter babinya digambar langsung sebagai <b>grafis vektor SVG</b> di dalam kode, bukan tempelan
+      gambar jadi. Tubuhnya disusun dari lapisan-lapisan terpisah seperti boneka animasi 2D: empat kaki,
+      badan, ekor keriting, kepala, telinga, dan moncong — masing-masing bisa digerakkan sendiri-sendiri.
+      Latar digambar berlapis juga: awan badai, pagar kayu pekarangan, rerumputan, dan genangan lumpur
+      cokelat besar sebagai panggung utamanya. Bercak lumpur di badan dan kepala digambar sebagai lapisan
+      khusus yang muncul bertahap mengikuti Meter Kotor, jadi makin sering guling-guling, makin belepotan babinya.
+    </p>
+  </section>
+
+  <section>
+    <h3><span class="nomor n2">2</span>Suara 🔊</h3>
+    <p>
+      Suara khas babinya adalah <b>rekaman babi asli</b>: klip “Pig Oinking” dari
+      SoundBible.com (lisensi Attribution 3.0) — dengusan ganda “oink-oink” yang direkam
+      dari jarak dekat, jernih tanpa suara latar peternakan. Rekamannya tertanam langsung
+      di dalam file halaman ini sebagai <b>data URI</b> (file <code>oink.mp3</code> yang sama
+      disertakan juga di repo), jadi suaranya tidak bisa hilang gara-gara file terpisah.
+      Jerit bahagianya saat jadi Babi Lumpur Legendaris adalah potongan rekaman yang sama
+      yang dinaikkan nadanya (<code>jerit.mp3</code>), dan setiap kali oink berbunyi suara
+      hujan otomatis diredupkan sesaat supaya dengusannya terdengar paling depan.
+      Rekaman diputar lewat <b>HTML5 Audio</b> dan dihubungkan ke Web Audio API dengan
+      <b>MediaElementSource</b>, jadi tetap melewati <b>AnalyserNode</b> yang sama seperti suara cuaca:
+      suara hujan (white noise low-pass yang mengikuti slider Intensitas Hujan), cipratan lumpur
+      (noise burst setiap babi menabrak genangan), dan petir (gemuruh noise low-pass 120 Hz) yang
+      ketiganya disintesis langsung. Equalizer di pojok panggung, gelombang suara di moncong, dan
+      denyut babinya bergerak mengikuti kerasnya suara yang sedang keluar.
+    </p>
+  </section>
+
+  <section>
+    <h3><span class="nomor n3">3</span>Gerak 🏃</h3>
+    <p>
+      Animasi digerakkan <b>JavaScript (requestAnimationFrame)</b> dengan tiga perilaku. Pertama,
+      <b>jalan santai</b>: kaki-kaki berayun bergantian, badan naik-turun halus, ekor berkibas. Kedua,
+      perilaku khas babinya: <b>guling-guling 360° di genangan lumpur</b> — seluruh badan berputar penuh
+      sambil bergeser kiri-kanan di dalam genangan, kaki menendang-nendang, genangan beriak, partikel
+      lumpur beterbangan, dan setiap satu putaran penuh menambah Meter Kotor, Meter Bahagia, dan penghitung
+      gulingan. Ketiga, cuaca hidup: tetesan hujan jatuh terus dari awan yang bergeser, petir menyambar
+      acak saat hujan deras, dan kalau hujan dimatikan matahari serta pelangi muncul.
+    </p>
+  </section>
+
+  <section>
+    <h3><span class="nomor n4">4</span>Versi Video (Dibuat dengan Python) 🎬</h3>
+    <p>
+      Cerita yang sama juga dirender menjadi video MP4 oleh program Python
+      (Pillow + NumPy + FFmpeg): babi berjalan di tengah hujan, berhenti di genangan,
+      lalu guling-guling di lumpur sambil bersuara. Trek suara videonya dirakit oleh program
+      yang sama menjadi file WAV: hujan, cipratan, dan petir disintesis NumPy, sedangkan
+      oink-nya memakai rekaman babi asli yang sama dengan versi web (<code>oink.mp3</code>),
+      lalu trek itu digabung ke video.
+    </p>
+    <div class="player">
+      <video controls poster="poster.jpg" preload="metadata">
+        <source src="babi_bergerak.mp4" type="video/mp4">
+        Browser Anda tidak mendukung pemutaran video.
+      </video>
+    </div>
+    <pre><code>pip install pillow numpy
+python buat_babi_bergerak.py</code></pre>
+    <div class="unduh">
+      <a href="babi_bergerak.mp4" download>🎥 Video MP4</a>
+      <a href="buat_babi_bergerak.py" download>🐍 Kode Python</a>
+      <a href="oink.mp3" download>🐽 Suara Oink Asli (MP3)</a>
+      <a href="babi_suara.wav" download>🎵 Suara Video (WAV)</a>
+      <a href="poster.jpg" download>🖼️ Poster</a>
+    </div>
+  </section>
+  </div>
+
+  <footer>Dibuat dengan ❤️, Python, dan segentong lumpur | Suara babi: rekaman “Pig Oinking”, SoundBible.com (Attribution 3.0) 🐷</footer>
+</div>
+
+<audio id="audioOink" src="data:audio/mpeg;base64,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" preload="auto"></audio>
+<audio id="audioJerit" src="data:audio/mpeg;base64,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" preload="auto"></audio>
+<script>
+(function () {
+  const panggung = document.getElementById('panggung');
+  const pigMover = document.getElementById('pigMover');
+  const pigBob = document.getElementById('pigBob');
+  const pigRoll = document.getElementById('pigRoll');
+  const gelembung = document.getElementById('gelembung');
+  const teksGelembung = document.getElementById('teksGelembung');
+  const eqBars = document.querySelectorAll('#eq span');
+  const gelombang = [0, 1, 2].map(i => document.getElementById('gel' + i));
+  const kaki = {
+    D1: document.getElementById('kakiD1'), D2: document.getElementById('kakiD2'),
+    B1: document.getElementById('kakiB1'), B2: document.getElementById('kakiB2')
+  };
+  const kepala = document.getElementById('kepala');
+  const moncong = document.getElementById('moncong');
+  const mataBiasa = document.getElementById('mataBiasa');
+  const mataSenang = document.getElementById('mataSenang');
+  const spots = document.querySelectorAll('.spot-lumpur');
+  const sliderCepat = document.getElementById('sliderCepat');
+  const sliderHujan = document.getElementById('sliderHujan');
+  const sliderVol = document.getElementById('sliderVol');
+  const kilat = document.getElementById('kilat');
+  const petirSvg = document.getElementById('petirSvg');
+
+  let mode = 'jalan';            // 'jalan' | 'guling'
+  let sudut = 0, putaranTerhitung = 0;
+  let kotor = 10, bahagia = 20, gulingan = 0;
+  let oinkSampai = 0, legendarisSudah = false;
+  let sudutCipratTerakhir = 0, waktuPetirBerikut = performance.now() + 9000 + Math.random() * 9000;
+
+  /* ---------------- Meter & bercak lumpur ---------------- */
+  function segarkanMeter() {
+    document.getElementById('isiBahagia').style.width = bahagia + '%';
+    document.getElementById('angkaBahagia').textContent = Math.round(bahagia) + '%';
+    document.getElementById('isiKotor').style.width = kotor + '%';
+    document.getElementById('angkaKotor').textContent = Math.round(kotor) + '%';
+    document.getElementById('angkaGuling').textContent = gulingan + 'x';
+    document.getElementById('isiGuling').style.width = Math.min(100, gulingan * 10) + '%';
+    spots.forEach(function (s) {
+      s.setAttribute('opacity', kotor >= Number(s.dataset.ambang) ? '0.88' : '0');
+    });
+  }
+  function ucap(teks) { teksGelembung.textContent = teks; }
+
+  /* ---------------- Hujan ---------------- */
+  const wadahHujan = document.getElementById('hujan');
+  const semuaTetes = [];
+  for (let i = 0; i < 130; i++) {
+    const t = document.createElement('span');
+    t.className = 'tetes';
+    t.style.left = (Math.random() * 100) + '%';
+    t.style.height = (12 + Math.random() * 14) + 'px';
+    t.style.animationDuration = (0.55 + Math.random() * 0.5) + 's';
+    t.style.animationDelay = (-Math.random() * 1.2) + 's';
+    wadahHujan.appendChild(t);
+    semuaTetes.push(t);
+  }
+  function segarkanHujan() {
+    const inten = Number(sliderHujan.value);
+    document.getElementById('nilaiHujan').textContent = inten + '%';
+    const tampil = Math.round(inten / 100 * semuaTetes.length);
+    semuaTetes.forEach(function (t, i) { t.style.display = i < tampil ? 'block' : 'none'; });
+    panggung.classList.toggle('reda', inten === 0);
+    if (rainGain && ctxAudio) rainGain.gain.setTargetAtTime((inten / 100) * 0.16, ctxAudio.currentTime, 0.2);
+    if (inten === 0) ucap('Hujannya reda! Tuh ada pelangi 🌈 ...tapi lumpurnya masih basah 👀');
+  }
+
+  /* ---------------- Audio: oink = rekaman babi asli, cuaca = sintesis ---------------- */
+  const audioOink = document.getElementById('audioOink');
+  const audioJerit = document.getElementById('audioJerit');
+  let ctxAudio = null, master = null, analyser = null, dataFrek = null, rainGain = null;
+  let mediaTersambung = false, hujanSudah = false;
+  function siapkanAudio() {
+    if (ctxAudio) { ctxAudio.resume(); return; }
+    try {
+      ctxAudio = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctxAudio.createGain();
+      master.gain.value = (sliderVol.value / 100) * 0.9;
+      analyser = ctxAudio.createAnalyser();
+      analyser.fftSize = 64;
+      dataFrek = new Uint8Array(analyser.frequencyBinCount);
+      master.connect(analyser); analyser.connect(ctxAudio.destination);
+
+      // Sambungkan rekaman babi asli ke rantai master -> analyser,
+      // supaya equalizer & gelombang suara ikut bergerak saat oink berbunyi.
+      try {
+        ctxAudio.createMediaElementSource(audioOink).connect(master);
+        ctxAudio.createMediaElementSource(audioJerit).connect(master);
+        mediaTersambung = true;
+      } catch (e) { /* elemen tetap bisa diputar langsung */ }
+
+      // Hujan: white noise berputar -> low-pass -> gain hujan
+      if (!hujanSudah) {
+        hujanSudah = true;
+        const len = ctxAudio.sampleRate * 2;
+        const buf = ctxAudio.createBuffer(1, len, ctxAudio.sampleRate);
+        const d = buf.getChannelData(0);
+        for (let i = 0; i < len; i++) d[i] = Math.random() * 2 - 1;
+        const srcHujan = ctxAudio.createBufferSource();
+        srcHujan.buffer = buf; srcHujan.loop = true;
+        const saringHujan = ctxAudio.createBiquadFilter();
+        saringHujan.type = 'lowpass'; saringHujan.frequency.value = 850;
+        rainGain = ctxAudio.createGain();
+        rainGain.gain.value = (sliderHujan.value / 100) * 0.16;
+        srcHujan.connect(saringHujan); saringHujan.connect(rainGain); rainGain.connect(master);
+        srcHujan.start();
+      }
+    } catch (e) { /* browser tanpa Web Audio: elemen audio tetap bunyi langsung */ }
+  }
+  function levelSuara() {
+    if (!analyser) return 0;
+    analyser.getByteFrequencyData(dataFrek);
+    let total = 0;
+    for (let i = 0; i < dataFrek.length; i++) total += dataFrek[i];
+    return total / dataFrek.length / 255;
+  }
+  function ledakanNoise(durasi, frekSaring, gainPuncak, tipe) {
+    if (!ctxAudio) return;
+    const t0 = ctxAudio.currentTime;
+    const len = Math.max(1, Math.floor(ctxAudio.sampleRate * durasi));
+    const buf = ctxAudio.createBuffer(1, len, ctxAudio.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+    const src = ctxAudio.createBufferSource(); src.buffer = buf;
+    const f = ctxAudio.createBiquadFilter(); f.type = tipe || 'lowpass'; f.frequency.value = frekSaring;
+    const g = ctxAudio.createGain();
+    g.gain.setValueAtTime(gainPuncak, t0);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + durasi);
+    src.connect(f); f.connect(g); g.connect(master);
+    src.start();
+  }
+  function putarRekaman(el) {
+    // Rekaman babi tertanam sebagai data URI di elemen audio: selalu tersedia,
+    // tidak tergantung file terpisah di sebelah index.html.
+    if (!el) return;
+    try {
+      el.currentTime = 0;
+      const janji = el.play();
+      if (janji && janji.catch) janji.catch(function () {});
+    } catch (e) { /* browser sangat lama: abaikan */ }
+  }
+  function redupkanHujanSebentar() {
+    // Hujan diredupkan sesaat supaya dengusan babi terdengar paling depan.
+    if (!rainGain || !ctxAudio) return;
+    const target = (sliderHujan.value / 100) * 0.16;
+    rainGain.gain.setTargetAtTime(target * 0.2, ctxAudio.currentTime, 0.04);
+    setTimeout(function () {
+      if (rainGain && ctxAudio) rainGain.gain.setTargetAtTime(target, ctxAudio.currentTime, 0.18);
+    }, 620);
+  }
+  function bunyiOink() {
+    redupkanHujanSebentar();
+    putarRekaman(audioOink);
+  }
+  function bunyiCiprat() { ledakanNoise(0.16, 480, 0.5); }
+  function bunyiPetir() {
+    if (!ctxAudio) return;
+    ledakanNoise(1.7, 130, 0.9);
+    const t0 = ctxAudio.currentTime;
+    const osc = ctxAudio.createOscillator(); osc.type = 'sine'; osc.frequency.value = 52;
+    const g = ctxAudio.createGain();
+    g.gain.setValueAtTime(0.5, t0);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + 1.5);
+    osc.connect(g); g.connect(master); osc.start(t0); osc.stop(t0 + 1.6);
+  }
+  function bunyiJeritBahagia() {
+    redupkanHujanSebentar();
+    putarRekaman(audioJerit);
+  }
+
+  /* ---------------- Partikel ---------------- */
+  function ledakanPartikel(simbol, xPersen, yPersen, jumlah) {
+    for (let i = 0; i < jumlah; i++) {
+      const s = document.createElement('span');
+      s.className = 'partikel';
+      s.textContent = simbol[i % simbol.length];
+      s.style.left = xPersen + '%';
+      s.style.top = yPersen + '%';
+      s.style.setProperty('--dx', ((Math.random() - 0.5) * 210).toFixed(0) + 'px');
+      s.style.setProperty('--dy', ((Math.random() - 0.85) * 170).toFixed(0) + 'px');
+      s.style.setProperty('--rot', ((Math.random() - 0.5) * 170).toFixed(0) + 'deg');
+      panggung.appendChild(s);
+      setTimeout(function () { s.remove(); }, 950);
+    }
+  }
+
+  /* ---------------- Aksi-aksi ---------------- */
+  function oink() {
+    siapkanAudio();
+    bunyiOink();
+    oinkSampai = performance.now() + 700;
+    gelembung.classList.add('berteriak');
+    ucap('OINK! OINK! 🐽');
+    ledakanPartikel(['♪', '🐽', '💗', '✧'], 76, 26, 10);
+    setTimeout(function () {
+      gelembung.classList.remove('berteriak');
+      if (mode === 'jalan') ucap('Hujan-hujan gini enaknya guling di lumpur! 🟤');
+    }, 900);
+  }
+  const kalimatGuling = [
+    'OINK! Enak bangeeet! 🟤', 'Guling teruuus, jangan kasih kendor!',
+    'Lumpur itu spa gratis tau! 💅', 'Satu putaran lagi... dua... sepuluh!',
+    'Baju bersih? Nggak kenal tuh. 😎'
+  ];
+  function jadiLegendaris() {
+    legendarisSudah = true;
+    document.getElementById('lencana').style.display = 'inline-block';
+    ucap('AKU... BABI LUMPUR LEGENDARIS! 🏆');
+    bunyiJeritBahagia();
+    ledakanPartikel(['👑', '💗', '✨', '🏆', '🟤'], 50, 40, 16);
+  }
+  function selesaiSatuPutaran() {
+    gulingan++;
+    kotor = Math.min(100, kotor + 9);
+    bahagia = Math.min(100, bahagia + 12);
+    ucap(kalimatGuling[gulingan % kalimatGuling.length]);
+    if (gulingan % 2 === 0) bunyiOink();
+    if (kotor >= 100 && !legendarisSudah) jadiLegendaris();
+    segarkanMeter();
+  }
+  function alihGuling() {
+    siapkanAudio();
+    if (mode === 'guling') {
+      mode = 'jalan'; sudut = 0; pigRoll.style.transform = 'rotate(0deg)';
+      document.getElementById('btnGuling').textContent = '🌀 Guling-guling!';
+      ucap('Huft... capek. Jalan santai dulu ya 🚶');
+    } else {
+      mode = 'guling';
+      document.getElementById('btnGuling').textContent = '⏹️ Berhenti Guling';
+      ucap('SIAP-SIAP... GULING-GULING! 🌀🟤');
+      bunyiCiprat();
+    }
+  }
+  function sambaranPetir() {
+    siapkanAudio();
+    kilat.style.transition = 'none'; kilat.style.opacity = 0.92;
+    petirSvg.style.opacity = 1;
+    setTimeout(function () {
+      kilat.style.transition = 'opacity .55s ease'; kilat.style.opacity = 0;
+      petirSvg.style.opacity = 0;
+    }, 110);
+    bunyiPetir();
+    ucap('DUARRR! ⚡ Untung aku nggak takut petir.');
+    setTimeout(function () { if (mode === 'jalan') ucap('Hujan-hujan gini enaknya guling di lumpur! 🟤'); }, 2600);
+  }
+  function mandikan() {
+    siapkanAudio();
+    if (mode === 'guling') alihGuling();
+    kotor = 0; legendarisSudah = false;
+    document.getElementById('lencana').style.display = 'none';
+    ledakanNoise(0.5, 3200, 0.3, 'highpass');
+    ledakanPartikel(['🫧', '✨', '💧'], 50, 42, 14);
+    ucap('Byur! Segar lagi... tapi kok lumpurnya manggil-manggil ya 👀');
+    segarkanMeter();
+  }
+
+  /* ---------------- Kontrol ---------------- */
+  sliderCepat.addEventListener('input', function () {
+    document.getElementById('nilaiCepat').textContent = Number(sliderCepat.value).toFixed(1) + 'x';
+  });
+  sliderVol.addEventListener('input', function () {
+    document.getElementById('nilaiVol').textContent = sliderVol.value + '%';
+    if (master && ctxAudio) master.gain.setTargetAtTime((sliderVol.value / 100) * 0.9, ctxAudio.currentTime, 0.05);
+  });
+  sliderHujan.addEventListener('input', segarkanHujan);
+  pigMover.addEventListener('click', function (e) { e.stopPropagation(); oink(); });
+  panggung.addEventListener('click', function () { siapkanAudio(); });
+  document.getElementById('btnOink').addEventListener('click', oink);
+  document.getElementById('btnGuling').addEventListener('click', alihGuling);
+  document.getElementById('btnPetir').addEventListener('click', sambaranPetir);
+  document.getElementById('btnMandi').addEventListener('click', mandikan);
+  document.addEventListener('keydown', function (e) {
+    if (e.code === 'Space') { e.preventDefault(); oink(); }
+    else if (e.code === 'KeyG') alihGuling();
+    else if (e.code === 'KeyP') sambaranPetir();
+    else if (e.code === 'KeyM') mandikan();
+  });
+
+  /* ---------------- Loop animasi ---------------- */
+  let faseJalan = 0, terakhir = performance.now();
+  function putar(sekarang) {
+    const dt = Math.min(0.05, (sekarang - terakhir) / 1000);
+    terakhir = sekarang;
+    const cepat = Number(sliderCepat.value);
+    const lagiOink = sekarang < oinkSampai;
+    const level = (lagiOink || mode === 'guling') ? levelSuara() : 0;
+
+    // Mata: senang saat guling / oink
+    const senang = mode === 'guling' || lagiOink;
+    mataBiasa.setAttribute('opacity', senang ? '0' : '1');
+    mataSenang.setAttribute('opacity', senang ? '1' : '0');
+
+    if (mode === 'jalan') {
+      faseJalan += dt * cepat * (2 * Math.PI / 0.9);
+      const ayun = Math.sin(faseJalan) * 20;
+      kaki.D1.style.transform = 'rotate(' + ayun.toFixed(1) + 'deg)';
+      kaki.B2.style.transform = 'rotate(' + ayun.toFixed(1) + 'deg)';
+      kaki.D2.style.transform = 'rotate(' + (-ayun).toFixed(1) + 'deg)';
+      kaki.B1.style.transform = 'rotate(' + (-ayun).toFixed(1) + 'deg)';
+      pigBob.style.transform = 'translateY(' + (-Math.abs(Math.sin(faseJalan)) * 2.2).toFixed(2) + '%)';
+      pigMover.style.transform = 'translateX(calc(-50% + ' + (Math.sin(faseJalan * 0.5) * 10).toFixed(1) + 'px))';
+      pigRoll.style.transform = 'rotate(0deg)';
+      gelombang.forEach(function (g) { g.style.opacity = 0; });
+    } else {
+      // GULING-GULING 360 derajat di lumpur
+      sudut += dt * cepat * 190;
+      const rad = sudut * Math.PI / 180;
+      pigRoll.style.transform = 'rotate(' + sudut.toFixed(1) + 'deg)';
+      pigBob.style.transform = 'translateY(' + (-Math.abs(Math.sin(rad)) * 4).toFixed(2) + '%)';
+      pigMover.style.transform = 'translateX(calc(-50% + ' + (Math.sin(rad) * 34).toFixed(1) + 'px))';
+      const tendang = Math.sin(sekarang / 55) * 32;
+      kaki.D1.style.transform = 'rotate(' + tendang.toFixed(1) + 'deg)';
+      kaki.D2.style.transform = 'rotate(' + (-tendang).toFixed(1) + 'deg)';
+      kaki.B1.style.transform = 'rotate(' + (-tendang * 0.8).toFixed(1) + 'deg)';
+      kaki.B2.style.transform = 'rotate(' + (tendang * 0.8).toFixed(1) + 'deg)';
+      if (sudut - sudutCipratTerakhir >= 55) {
+        sudutCipratTerakhir = sudut;
+        ledakanPartikel(['🟤', '💧', '•'], 50 + Math.sin(rad) * 16, 82, 6);
+        if (ctxAudio) bunyiCiprat();
+      }
+      if (Math.floor(sudut / 360) > putaranTerhitung) {
+        putaranTerhitung = Math.floor(sudut / 360);
+        selesaiSatuPutaran();
+      }
+    }
+
+    // Kepala & moncong berdenyut saat bersuara
+    const denyut = 1 + level * 0.35 + (lagiOink ? Math.sin(sekarang / 40) * 0.03 : 0);
+    moncong.style.transformBox = 'fill-box';
+    moncong.style.transformOrigin = '50% 50%';
+    moncong.style.transform = 'scale(' + denyut.toFixed(3) + ')';
+
+    // Gelombang suara dari moncong saat oink
+    if (lagiOink) {
+      const t = sekarang / 1000;
+      gelombang.forEach(function (g, i) {
+        const f = (t * 1.1 + i / 3) % 1;
+        const ukuran = 26 + f * 140;
+        g.style.left = '72%'; g.style.top = '30%';
+        g.style.width = g.style.height = ukuran + 'px';
+        g.style.opacity = (Math.max(0, 1 - f) * (0.3 + level * 1.2)).toFixed(2);
+      });
+    } else if (mode === 'jalan') {
+      gelombang.forEach(function (g) { g.style.opacity = 0; });
+    }
+
+    // Equalizer
+    if (analyser && (lagiOink || mode === 'guling')) {
+      analyser.getByteFrequencyData(dataFrek);
+      eqBars.forEach(function (b, i) {
+        const v = dataFrek[1 + i * 2] / 255;
+        b.style.height = (12 + v * 85) + '%';
+      });
+    } else {
+      eqBars.forEach(function (b) { b.style.height = '12%'; });
+    }
+
+    // Petir acak saat hujan cukup deras
+    if (sekarang > waktuPetirBerikut) {
+      waktuPetirBerikut = sekarang + 11000 + Math.random() * 12000;
+      if (Number(sliderHujan.value) >= 40 && ctxAudio) sambaranPetir();
+      else if (Number(sliderHujan.value) >= 40) {
+        kilat.style.transition = 'none'; kilat.style.opacity = 0.7;
+        setTimeout(function () { kilat.style.transition = 'opacity .55s ease'; kilat.style.opacity = 0; }, 100);
+      }
+    }
+    requestAnimationFrame(putar);
+  }
+
+  segarkanMeter();
+  segarkanHujan();
+  requestAnimationFrame(putar);
+})();
+</script>
+</body>
+</html>
