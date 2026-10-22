@@ -5,7 +5,7 @@ dari karakter hewan yang ditentukan — **babi** — dengan alur proses
 Gambar (Visual), Suara (Audio), dan Gerak (Animasi). Tema: **hujan dan
 lumpur**, dengan gerak khas babi **guling-guling di genangan lumpur**.
 
-**Halaman tugas (GitHub Pages):** https://wisnunot.github.io/babi-bergerak/
+**Halaman tugas (GitHub Pages):** https://wisnunot.github.io/tugas-individu-4-sistem-multimedia/
 
 Tampilan halamannya bertema **Minecraft** (font pixel Press Start 2P, latar tanah/dirt, tombol blok 3D ala GUI Minecraft, panel status ala hearts/XP bar, kartu penjelasan bata batu 2 kolom, bingkai panggung grass block) — sementara karakter, animasi, dan dunianya tetap babi hujan & lumpur.
 
